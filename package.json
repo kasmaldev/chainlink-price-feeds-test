@@ -1,0 +1,19 @@
+{
+  "name": "chainlink-price-feeds-test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/yuichiroaoki/chainlink-price-feeds-test.git",
+  "author": "yuichiroaoki <yuichiroaoki27@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@chainlink/contracts": "^0.1.7",
+    "@nomiclabs/hardhat-waffle": "^2.0.1",
+    "@types/chai": "^4.2.18",
+    "@types/mocha": "^8.2.2",
+    "@types/node": "^15.12.2",
+    "chai": "^4.3.4",
+    "hardhat": "^2.3.3",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.2"
+  }
+}
