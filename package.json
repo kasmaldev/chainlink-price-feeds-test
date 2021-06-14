@@ -8,6 +8,7 @@
   "scripts": {
     "compile": "npx hardhat compile",
     "deploy": "npx hardhat run scripts/deploy.ts",
+    "deploy-kovan": "npx hardhat run --network kovan scripts/deploy.ts",
     "test": "npx hardhat test",
     "account": "npx hardhat accounts"
   },
