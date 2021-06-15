@@ -6,7 +6,7 @@ async function main() {
 
     const contractAddress = "0xe4D23c26945Bb14DaD7Fdf1eccF1279Ac92612D4"
     const PriceConverterContract = await ethers.getContractFactory("PriceConverter");
-    const contract = await PriceConverterContract.attach(contractAddress);
+    const contract = PriceConverterContract.attach(contractAddress);
     const latestPrice = await contract.getThePrice();
     const convertPrice = await contract.convertPrice(50000);
 
