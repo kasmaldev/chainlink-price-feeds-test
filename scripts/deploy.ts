@@ -1,26 +1,18 @@
 import { ethers } from "hardhat";
 
 const ETHERSCAN_TX_URL = "https://kovan.etherscan.io/tx/"
-const sample_token_uri = "https://ipfs.io/ipfs/Qmd9MCGtdVz2miNumBHDbvj8bigSgTwnr4SbyH6DNnpWdt?filename=0-PUG.json"
 
 async function main() {
-  const Greeter = await ethers.getContractFactory("PriceConverter");
-  // const Token = await ethers.getContractFactory("TokenERC20");
-  // const collectible = await ethers.getContractFactory("PriceConverter");
-  // const greeter = await Greeter.deploy("Hello, Hardhat!");
-  // const token = await Token.deploy(1000);
-  const Collectible = await Greeter.deploy();
-  console.log(await Collectible.getThePrice())
+  const Contract = await ethers.getContractFactory("PriceConverter");
 
-  // const newItemID = await Collectible.createCollectible(sample_token_uri)
+  const contract = await Contract.deploy();
+  console.log(await contract.getEthUsd())
+  console.log(await contract.getJpyUsd())
 
-  console.log("Token deployed to:", Collectible.address);
+  console.log("Token deployed to:", contract.address);
   console.log(
-    `You did it! View your tx here: ${ETHERSCAN_TX_URL}${Collectible.deployTransaction.hash}`
+    `You did it! View your tx here: ${ETHERSCAN_TX_URL}${contract.deployTransaction.hash}`
   )
-  // console.log({
-  //   newItemID
-  // })
 }
 
 main()
