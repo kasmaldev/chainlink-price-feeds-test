@@ -7,6 +7,8 @@ contract PriceConverter {
     AggregatorV3Interface internal eth_usd_price_feed;
     AggregatorV3Interface internal jpy_usd_price_feed;
 
+    address public admin;
+    address secondAddress = 0xB0fD1307c2e0d088424fa4939F53303974421924;
     /**
      * Network: Kovan
      * Aggregator: ETH/USD
@@ -23,6 +25,17 @@ contract PriceConverter {
     constructor() {
         eth_usd_price_feed = AggregatorV3Interface(0x9326BFA02ADD2366b30bacB125260Af641031331);
         jpy_usd_price_feed = AggregatorV3Interface(0xD627B1eF3AC23F1d3e576FA6206126F3c1Bd0942);
+
+        admin = msg.sender;
+    }
+
+    /**
+    * @notice contract can receive Ether.
+    */
+    receive() external payable {}
+
+    function getBalance() public view returns (uint) {
+        return address(this).balance;
     }
 
     /**
@@ -71,4 +84,29 @@ contract PriceConverter {
 
     }
 
+    function firstSendEther(address payable recipient) external {
+        require(address(this).balance >= 1000, "contract balance is not enough");
+        recipient.transfer(1000); 
+    }
+
+    /**
+    * @dev transferring _amount Ether to 
+    * the _recipient address from the contract.
+    * 
+    * requires: enough balance
+    * 
+    * @return true if transfer was successful
+    */
+    function transferEther(
+        address payable _recipient, 
+        uint _amount
+    ) 
+        external 
+        returns (bool) 
+    {
+        require(address(this).balance >= _amount, 'Not enough Ether in contract!');
+        _recipient.transfer(_amount);
+        
+        return true;
+    }
 }
