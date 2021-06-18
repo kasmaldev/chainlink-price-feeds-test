@@ -66,28 +66,19 @@ contract PriceConverter {
         return price;
     }
 
-    function convertPrice(int input) public view returns (int) {
-        (
-            uint80 roundID, 
-            int price,
-            uint startedAt,
-            uint timeStamp,
-            uint80 answeredInRound
-        ) = eth_usd_price_feed.latestRoundData();
+    function getJpyEth(uint input) public view returns (uint) {
 
         require(input > 0, "The input should be a positive number.");
 
-        int currentRate = 110;
-        // int currentRate = 109.79;
+        uint newInput = input * 10 ** 8;
 
-        return input / price / currentRate;
+        uint EthUsd = uint(getEthUsd());
+        uint JpyUsd = uint(getJpyUsd());
+
+        return newInput * JpyUsd / EthUsd;
 
     }
 
-    function firstSendEther(address payable recipient) external {
-        require(address(this).balance >= 1000, "contract balance is not enough");
-        recipient.transfer(1000); 
-    }
 
     /**
     * @dev transferring _amount Ether to 
@@ -101,12 +92,30 @@ contract PriceConverter {
         address payable _recipient, 
         uint _amount
     ) 
-        external 
+        public 
         returns (bool) 
     {
-        require(address(this).balance >= _amount, 'Not enough Ether in contract!');
+        uint balance = getBalance(); 
+
+        require(balance >= _amount, 'Not enough Ether in contract!');
         _recipient.transfer(_amount);
         
         return true;
+    }
+
+    function transferJpyEth(
+        address payable _recipient,
+        uint _amountInJpy
+    )
+        public
+        returns (bool)
+    {
+        uint balance = getBalance();
+        uint _amountInEth = getJpyEth(_amountInJpy);
+
+        require(balance >= _amountInEth, 'Not enough Ether in contract!');
+
+        transferEther(_recipient, _amountInEth);
+        
     }
 }
