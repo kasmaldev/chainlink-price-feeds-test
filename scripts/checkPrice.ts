@@ -33,6 +33,7 @@ async function main() {
     const transferJpyEth = await contract.transferJpyEth(
         mySecondAddress, 45000
     )
+    
     console.log(
         `You did it! View your tx here: ${ETHERSCAN_TX_URL}${transferJpyEth.hash}`
     )

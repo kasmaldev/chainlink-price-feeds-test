@@ -62,7 +62,7 @@ contract PriceConverter {
         return price;
     }
 
-    function getJpyEth(uint _amountInJpy) public view returns (uint) {
+    function getEthJpy(uint _amountInJpy) public view returns (uint) {
 
         uint newInput = _amountInJpy * 10 ** 8;
 
@@ -114,11 +114,12 @@ contract PriceConverter {
         returns (bool)
     {
         uint balance = getBalance();
-        uint _amountInEth = getJpyEth(_amountInJpy) * 10 ** 10;
+        uint _amountInEth = getEthJpy(_amountInJpy) * 10 ** 10;
 
         require(balance >= _amountInEth, 'Not enough Ether in contract!');
 
         transferEther(_recipient, _amountInEth);
         
     }
+
 }
