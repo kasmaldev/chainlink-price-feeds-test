@@ -3,11 +3,9 @@ import { ethers } from "hardhat";
 const ETHERSCAN_TX_URL = "https://kovan.etherscan.io/tx/"
 
 async function main() {
-  const Contract = await ethers.getContractFactory("PriceConverter");
+  const Contract = await ethers.getContractFactory("SendEther");
 
   const contract = await Contract.deploy();
-  console.log(await contract.getEthUsd())
-  console.log(await contract.getJpyUsd())
 
   console.log("Token deployed to:", contract.address);
   console.log(
