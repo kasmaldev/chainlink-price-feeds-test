@@ -7,8 +7,6 @@ contract PriceConverter {
     AggregatorV3Interface internal eth_usd_price_feed;
     AggregatorV3Interface internal jpy_usd_price_feed;
 
-    address public admin;
-    address secondAddress = 0xB0fD1307c2e0d088424fa4939F53303974421924;
     /**
      * Network: Kovan
      * Aggregator: ETH/USD
@@ -25,8 +23,6 @@ contract PriceConverter {
     constructor() {
         eth_usd_price_feed = AggregatorV3Interface(0x9326BFA02ADD2366b30bacB125260Af641031331);
         jpy_usd_price_feed = AggregatorV3Interface(0xD627B1eF3AC23F1d3e576FA6206126F3c1Bd0942);
-
-        admin = msg.sender;
     }
 
     /**
@@ -66,11 +62,9 @@ contract PriceConverter {
         return price;
     }
 
-    function getJpyEth(uint input) public view returns (uint) {
+    function getJpyEth(uint _amountInJpy) public view returns (uint) {
 
-        require(input > 0, "The input should be a positive number.");
-
-        uint newInput = input * 10 ** 8;
+        uint newInput = _amountInJpy * 10 ** 8;
 
         uint EthUsd = uint(getEthUsd());
         uint JpyUsd = uint(getJpyUsd());
@@ -103,6 +97,15 @@ contract PriceConverter {
         return true;
     }
 
+
+    /**
+    * @dev transferring _amount JPY to 
+    * the _recipient address from the contract.
+    * 
+    * requires: enough balance
+    * 
+    * @return true if transfer was successful
+    */
     function transferJpyEth(
         address payable _recipient,
         uint _amountInJpy
@@ -111,7 +114,7 @@ contract PriceConverter {
         returns (bool)
     {
         uint balance = getBalance();
-        uint _amountInEth = getJpyEth(_amountInJpy);
+        uint _amountInEth = getJpyEth(_amountInJpy) * 10 ** 10;
 
         require(balance >= _amountInEth, 'Not enough Ether in contract!');
 

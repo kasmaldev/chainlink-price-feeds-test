@@ -6,7 +6,7 @@ const ETHERSCAN_TX_URL = "https://kovan.etherscan.io/tx/"
 
 async function main() {
 
-    const contractAddress = "0xf9d6774f6f96E694c78755Ee9e2B84E34806faEc"
+    const contractAddress = "0x24c1103003A05BDDA51782728A023144E3e795E5"
     const PriceConverterContract = await ethers.getContractFactory("PriceConverter");
     const contract = PriceConverterContract.attach(contractAddress);
     const ethusd = await contract.getEthUsd();
