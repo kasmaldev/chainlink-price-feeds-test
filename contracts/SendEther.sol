@@ -43,24 +43,21 @@ contract SendEther {
         return price;
     }
 
-    function getEthJpy(uint _amountInJpy) public view returns (uint) {
-
-        uint newInput = _amountInJpy * 10 ** 8;
+    function getEthJpy() public view returns (uint) {
 
         uint EthUsd = uint(getEthUsd());
         uint JpyUsd = uint(getJpyUsd());
 
-        return newInput * JpyUsd / EthUsd;
+        return EthUsd * 10 ** 8 / JpyUsd;
 
     }
 
-    function transferEther(address payable _to, uint _amountInJpy) public payable {
-		uint balance = msg.sender.balance;
-        uint _amountInEth = getEthJpy(_amountInJpy) * 10 ** 10;
-        require(balance >= _amountInEth, 'Not enough balance in your wallet!');
+    function convertEthJpy(uint _amountInJpy) public view returns (uint) {
 
-        (bool success, ) = _to.call{value: _amountInEth }('');
-        require(success, "Transfer failed.");
+        uint EthJpy = uint(getEthJpy());
+
+        return _amountInJpy * 10 ** 16 / EthJpy;
+
     }
     
     function sendViaCall(address payable _to) public payable {
