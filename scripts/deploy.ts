@@ -1,9 +1,14 @@
 import { ethers } from "hardhat";
 
-const ETHERSCAN_TX_URL = "https://kovan.etherscan.io/tx/"
 
 async function main() {
-  const Contract = await ethers.getContractFactory("SendEther");
+  const Contract = await ethers.getContractFactory("SendEtherRinkeby");
+  
+  const provider = ethers.provider;
+  const network = await provider.getNetwork();
+  const networkName = network.name;
+  
+  const ETHERSCAN_TX_URL = `https://${networkName}.etherscan.io/tx/`
 
   const contract = await Contract.deploy();
 

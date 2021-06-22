@@ -3,13 +3,13 @@ pragma solidity 0.7.0;
 
 import "@chainlink/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
 
-contract SendEther {
+contract SendEtherRinkeby {
     AggregatorV3Interface internal eth_usd_price_feed;
     AggregatorV3Interface internal jpy_usd_price_feed;
 
     constructor() {
-        eth_usd_price_feed = AggregatorV3Interface(0x9326BFA02ADD2366b30bacB125260Af641031331);
-        jpy_usd_price_feed = AggregatorV3Interface(0xD627B1eF3AC23F1d3e576FA6206126F3c1Bd0942);
+        eth_usd_price_feed = AggregatorV3Interface(0x8A753747A1Fa494EC906cE90E9f37563A8AF630e);
+        jpy_usd_price_feed = AggregatorV3Interface(0x3Ae2F46a2D84e3D5590ee6Ee5116B80caF77DeCA);
     }
 
     /**

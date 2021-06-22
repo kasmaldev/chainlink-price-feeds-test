@@ -34,7 +34,11 @@ const with_kovan = {
     },
     kovan: {
       url: process.env.ALCHEMY_KOVAN_RPC_URL,
-      accounts: [`0x${process.env.KOVAN_PRIVATE_KEY}`]
+      accounts: [`0x${process.env.PRIVATE_KEY}`]
+    },
+    rinkeby: {
+      url: process.env.ALCHEMY_RINKEBY_RPC_URL,
+      accounts: [`0x${process.env.PRIVATE_KEY}`]
     },
   },
   etherscan: {
