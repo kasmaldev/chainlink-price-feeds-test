@@ -8,8 +8,8 @@
   "scripts": {
     "compile": "npx hardhat compile",
     "deploy": "npx hardhat run scripts/deploy.ts",
-    "deploy-kovan": "npx hardhat run --network kovan scripts/deploy.ts",
-    "deploy-rinkeby": "npx hardhat run --network rinkeby scripts/deploy.ts",
+    "deploy-kovan": "npx hardhat run --network kovan scripts/deployKovan.ts",
+    "deploy-rinkeby": "npx hardhat run --network rinkeby scripts/deployRinkeby.ts",
     "checkPrice": "npx hardhat run --network kovan scripts/checkPrice.ts",
     "sendEther": "npx hardhat run --network kovan scripts/sendEther.ts",
     "mainPrice": "npx hardhat run --network hardhat scripts/mainPrice.ts",
