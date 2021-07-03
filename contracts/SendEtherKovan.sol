@@ -26,11 +26,7 @@ contract SendEtherKovan {
 	
     function getEthUsd() public view returns (int) {
         (
-            uint80 roundID, 
-            int price,
-            uint startedAt,
-            uint timeStamp,
-            uint80 answeredInRound
+            , int price, , , 
         ) = eth_usd_price_feed.latestRoundData();
 
         return price;
@@ -39,11 +35,7 @@ contract SendEtherKovan {
 
     function getJpyUsd() public view returns (int) {
         (
-            uint80 roundID, 
-            int price,
-            uint startedAt,
-            uint timeStamp,
-            uint80 answeredInRound
+            , int price, , , 
         ) = jpy_usd_price_feed.latestRoundData();
 
         return price;
@@ -51,11 +43,7 @@ contract SendEtherKovan {
 
     function getEthEur() public view returns (uint) {
         (
-            uint80 roundID, 
-            int price,
-            uint startedAt,
-            uint timeStamp,
-            uint80 answeredInRound
+            , int price, , , 
         ) = eur_usd_price_feed.latestRoundData();
 
         uint EthUsd = uint(getEthUsd());
@@ -66,11 +54,7 @@ contract SendEtherKovan {
 
     function getEthAud() public view returns (uint) {
         (
-            uint80 roundID, 
-            int price,
-            uint startedAt,
-            uint timeStamp,
-            uint80 answeredInRound
+            , int price, , , 
         ) = aud_usd_price_feed.latestRoundData();
 
         uint EthUsd = uint(getEthUsd());
@@ -81,11 +65,7 @@ contract SendEtherKovan {
 
     function getEthGbp() public view returns (uint) {
         (
-            uint80 roundID, 
-            int price,
-            uint startedAt,
-            uint timeStamp,
-            uint80 answeredInRound
+            , int price, , , 
         ) = gbp_usd_price_feed.latestRoundData();
 
         uint EthUsd = uint(getEthUsd());
