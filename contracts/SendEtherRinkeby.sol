@@ -24,21 +24,24 @@ contract SendEtherRinkeby {
 
     receive() external payable {}
 	
-    function getEthUsd() public view returns (int) {
+    function getEthUsd() public view returns (uint) {
         (
             , int price, , , 
         ) = eth_usd_price_feed.latestRoundData();
 
-        return price;
+        return uint(price);
     }
 
 
-    function getJpyUsd() public view returns (int) {
+    function getEthJpy() public view returns (uint) {
         (
             , int price, , , 
         ) = jpy_usd_price_feed.latestRoundData();
 
-        return price;
+        uint EthUsd = getEthUsd();
+        uint JpyUsd = uint(price);
+
+        return EthUsd * 10 ** 8 / JpyUsd;
     }
 
     function getEthEur() public view returns (uint) {
@@ -46,7 +49,7 @@ contract SendEtherRinkeby {
             , int price, , , 
         ) = eur_usd_price_feed.latestRoundData();
 
-        uint EthUsd = uint(getEthUsd());
+        uint EthUsd = getEthUsd();
         uint EurUsd = uint(price);
 
         return EthUsd * 10 ** 8 / EurUsd;
@@ -57,7 +60,7 @@ contract SendEtherRinkeby {
             , int price, , , 
         ) = aud_usd_price_feed.latestRoundData();
 
-        uint EthUsd = uint(getEthUsd());
+        uint EthUsd = getEthUsd();
         uint AudUsd = uint(price);
 
         return EthUsd * 10 ** 8 / AudUsd;
@@ -68,24 +71,15 @@ contract SendEtherRinkeby {
             , int price, , , 
         ) = gbp_usd_price_feed.latestRoundData();
 
-        uint EthUsd = uint(getEthUsd());
+        uint EthUsd = getEthUsd();
         uint GbpUsd = uint(price);
 
         return EthUsd * 10 ** 8 / GbpUsd;
     }
 
-    function getEthJpy() public view returns (uint) {
-
-        uint EthUsd = uint(getEthUsd());
-        uint JpyUsd = uint(getJpyUsd());
-
-        return EthUsd * 10 ** 8 / JpyUsd;
-
-    }
-
     function convertEthUsd(uint _amountInUsd) public view returns (uint) {
 
-        uint EthUsd = uint(getEthUsd());
+        uint EthUsd = getEthUsd();
 
         return _amountInUsd * 10 ** 16 / EthUsd;
 
@@ -109,7 +103,7 @@ contract SendEtherRinkeby {
 
      function convertEthEur(uint _amountInEur) public view returns (uint) {
 
-        uint EthEur = uint(getEthAud());
+        uint EthEur = uint(getEthEur());
 
         return _amountInEur * 10 ** 16 / EthEur;
 
