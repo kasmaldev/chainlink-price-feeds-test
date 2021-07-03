@@ -2,24 +2,12 @@
 pragma solidity 0.7.0;
 
 import "@chainlink/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract PriceConverter {
+contract PriceConverter is Ownable {
     AggregatorV3Interface internal eth_usd_price_feed;
     AggregatorV3Interface internal jpy_usd_price_feed;
 
-    /**
-     * Network: Kovan
-     * Aggregator: ETH/USD
-     * Address: 0x9326BFA02ADD2366b30bacB125260Af641031331
-
-     * Aggregator: JPY/USD
-     * Address: 0xD627B1eF3AC23F1d3e576FA6206126F3c1Bd0942
-     
-
-    reference
-    https://docs.chain.link/docs/ethereum-addresses/
-
-     */
     constructor() {
         eth_usd_price_feed = AggregatorV3Interface(0x9326BFA02ADD2366b30bacB125260Af641031331);
         jpy_usd_price_feed = AggregatorV3Interface(0xD627B1eF3AC23F1d3e576FA6206126F3c1Bd0942);
@@ -30,6 +18,9 @@ contract PriceConverter {
     */
     receive() external payable {}
 
+    function deposit() public payable {
+    }
+
     function getBalance() public view returns (uint) {
         return address(this).balance;
     }
@@ -39,11 +30,7 @@ contract PriceConverter {
      */
     function getEthUsd() public view returns (int) {
         (
-            uint80 roundID, 
-            int price,
-            uint startedAt,
-            uint timeStamp,
-            uint80 answeredInRound
+            , int price, , , 
         ) = eth_usd_price_feed.latestRoundData();
 
         return price;
@@ -52,11 +39,7 @@ contract PriceConverter {
 
     function getJpyUsd() public view returns (int) {
         (
-            uint80 roundID, 
-            int price,
-            uint startedAt,
-            uint timeStamp,
-            uint80 answeredInRound
+            , int price, , , 
         ) = jpy_usd_price_feed.latestRoundData();
 
         return price;
@@ -122,4 +105,20 @@ contract PriceConverter {
         
     }
 
+    function withdraw() public onlyOwner {
+        // get the amount of Ether stored in this contract
+        uint amount = address(this).balance;
+
+        // send all Ether to owner
+        // Owner can receive Ether since the address of owner is payable
+        (bool success,) = owner().call{value: amount}("");
+        require(success, "Failed to send Ether");
+    }
+
+    // Function to transfer Ether from this contract to address from input
+    function transfer(address payable _to, uint _amount) public onlyOwner {
+        // Note that "to" is declared as payable
+        (bool success,) = _to.call{value: _amount}("");
+        require(success, "Failed to send Ether");
+    }
 }
