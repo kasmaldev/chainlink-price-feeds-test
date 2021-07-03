@@ -17,12 +17,6 @@ contract SendEtherKovan {
         eur_usd_price_feed = AggregatorV3Interface(0x0c15Ab9A0DB086e062194c273CC79f41597Bbf13);
         aud_usd_price_feed = AggregatorV3Interface(0x5813A90f826e16dB392abd2aF7966313fc1fd5B8);
     }
-
-    /**
-    * @notice contract can receive Ether.
-    */
-
-    receive() external payable {}
 	
     function getEthUsd() public view returns (uint) {
         (
@@ -116,12 +110,5 @@ contract SendEtherKovan {
         return _amountInGbp * 10 ** 16 / EthGbp;
 
     }   
-
-    function sendViaCall(address payable _to) public payable {
-        // Call returns a boolean value indicating success or failure.
-        // This is the current recommended method to use.
-        (bool sent, ) = _to.call{value: msg.value}("");
-        require(sent, "Failed to send Ether");
-    }
 
 }

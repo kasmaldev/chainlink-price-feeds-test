@@ -22,12 +22,6 @@ contract SendEtherKovan {
         cad_usd_price_feed = AggregatorV3Interface(0xa34317DB73e77d453b1B8d04550c44D10e981C8e);
     }
 
-    /**
-    * @notice contract can receive Ether.
-    */
-
-    receive() external payable {}
-	
     function getEthUsd() public view returns (uint) {
         (
             , int price, , , 

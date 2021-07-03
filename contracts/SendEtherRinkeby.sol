@@ -18,12 +18,6 @@ contract SendEtherRinkeby {
         aud_usd_price_feed = AggregatorV3Interface(0x21c095d2aDa464A294956eA058077F14F66535af);
     }
 
-    /**
-    * @notice contract can receive Ether.
-    */
-
-    receive() external payable {}
-	
     function getEthUsd() public view returns (uint) {
         (
             , int price, , , 
@@ -116,12 +110,5 @@ contract SendEtherRinkeby {
         return _amountInGbp * 10 ** 16 / EthGbp;
 
     }   
-
-    function sendViaCall(address payable _to) public payable {
-        // Call returns a boolean value indicating success or failure.
-        // This is the current recommended method to use.
-        (bool sent, ) = _to.call{value: msg.value}("");
-        require(sent, "Failed to send Ether");
-    }
 
 }

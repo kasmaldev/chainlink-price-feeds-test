@@ -2,7 +2,7 @@ import { ethers } from "hardhat";
 
 
 async function main() {
-  const Contract = await ethers.getContractFactory("SendEtherRinkeby");
+  const Contract = await ethers.getContractFactory("SendEther");
   
   const provider = ethers.provider;
   const network = await provider.getNetwork();
