@@ -14,13 +14,10 @@ describe("PriceConsumer", function() {
 
     const LinkUsd = await consumer.getThePrice(LINK, USD)
     expect(LinkUsd.gte(0));
-    console.log(LinkUsd.toNumber()/ 10 ** 8)
+    console.log("LINK/USD", LinkUsd.toNumber()/ 10 ** 8)
+
     const EthUsd = await consumer.getThePrice(ETH, USD)
-    console.log(EthUsd.toNumber() / 10 ** 8)
-    const JpyUsd = await consumer.getThePrice(JPY, USD)
-    console.log(JpyUsd.toNumber())
-    // const fiatData = await consumer.getEthFiat(ETH, JPY)
-    // console.log(formatEther(fiatData))
-    // expect(fiatData.gte(0));
+    console.log("ETH/USD", EthUsd.toNumber() / 10 ** 8)
+
   });
 });

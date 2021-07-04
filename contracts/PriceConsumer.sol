@@ -30,11 +30,4 @@ contract PriceConsumer {
         return price.toUint256();
     }
 
-    function getEthFiat(address asset, address denomination) public view returns (uint) {
-
-        uint EthUsd = getThePrice(Denominations.ETH, Denominations.USD);
-        uint FiatUsd = getThePrice(asset, denomination);
-        
-        return EthUsd.mul(10**8).div(FiatUsd); 
-    }
 }
