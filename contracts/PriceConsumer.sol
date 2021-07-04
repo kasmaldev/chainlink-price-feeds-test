@@ -2,8 +2,13 @@
 pragma solidity 0.8.4;
 
 import "@chainlink/contracts/src/v0.8/interfaces/FeedRegistryInterface.sol";
+import "@chainlink/contracts/src/v0.8/dev/Denominations.sol";
+import "@openzeppelin/contracts/utils/math/SafeCast.sol";
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 contract PriceConsumer {
+    using SafeCast for int256;
+    using SafeMath for uint256;
 
     FeedRegistryInterface internal registry;
 
@@ -18,10 +23,18 @@ contract PriceConsumer {
     /**
      * Returns the latest price
      */
-    function getThePrice(address asset, address denomination) public view returns (int) {
+    function getThePrice(address asset, address denomination) public view returns (uint) {
         (
             , int price, , , 
         ) = registry.latestRoundData(asset, denomination);
-        return price;
+        return price.toUint256();
+    }
+
+    function getEthFiat(address asset, address denomination) public view returns (uint) {
+
+        uint EthUsd = getThePrice(Denominations.ETH, Denominations.USD);
+        uint FiatUsd = getThePrice(asset, denomination);
+        
+        return EthUsd.mul(10**8).div(FiatUsd); 
     }
 }

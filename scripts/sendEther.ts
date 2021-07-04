@@ -1,6 +1,4 @@
 import { ethers } from "hardhat";
-import { formatEther, parseEther } from '@ethersproject/units';
-import { mySecondAddress } from "../constants";
 
 const ETHERSCAN_TX_URL = "https://kovan.etherscan.io/tx/"
 
