@@ -3,7 +3,7 @@ pragma solidity 0.8.4;
 
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
-contract SendEtherKovan {
+contract SendEther {
     AggregatorV3Interface internal eth_usd_price_feed;
     AggregatorV3Interface internal jpy_usd_price_feed;
     AggregatorV3Interface internal gbp_usd_price_feed;
@@ -12,6 +12,10 @@ contract SendEtherKovan {
     AggregatorV3Interface internal cny_usd_price_feed;
     AggregatorV3Interface internal cad_usd_price_feed;
 
+
+    /**
+     * Network: Mainnet
+     */
     constructor() {
         eth_usd_price_feed = AggregatorV3Interface(0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419);
         jpy_usd_price_feed = AggregatorV3Interface(0xBcE206caE7f0ec07b545EddE332A47C2F75bbeb3);

@@ -2,14 +2,22 @@
 pragma solidity 0.8.4;
 
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
+import "@openzeppelin/contracts/utils/math/SafeCast.sol";
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 contract SendEtherRinkeby {
+    using SafeCast for int256;
+    using SafeMath for uint256;
+
     AggregatorV3Interface internal eth_usd_price_feed;
     AggregatorV3Interface internal jpy_usd_price_feed;
     AggregatorV3Interface internal gbp_usd_price_feed;
     AggregatorV3Interface internal eur_usd_price_feed;
     AggregatorV3Interface internal aud_usd_price_feed;
 
+    /**
+     * Network: Rinkeby
+     */
     constructor() {
         eth_usd_price_feed = AggregatorV3Interface(0x8A753747A1Fa494EC906cE90E9f37563A8AF630e);
         jpy_usd_price_feed = AggregatorV3Interface(0x3Ae2F46a2D84e3D5590ee6Ee5116B80caF77DeCA);
@@ -23,7 +31,7 @@ contract SendEtherRinkeby {
             , int price, , , 
         ) = eth_usd_price_feed.latestRoundData();
 
-        return uint(price);
+        return price.toUint256();
     }
 
 
@@ -33,9 +41,9 @@ contract SendEtherRinkeby {
         ) = jpy_usd_price_feed.latestRoundData();
 
         uint EthUsd = getEthUsd();
-        uint JpyUsd = uint(price);
+        uint JpyUsd = price.toUint256();
 
-        return EthUsd * 10 ** 8 / JpyUsd;
+        return EthUsd.mul(10 ** 8).div(JpyUsd);
     }
 
     function getEthEur() public view returns (uint) {
@@ -44,9 +52,9 @@ contract SendEtherRinkeby {
         ) = eur_usd_price_feed.latestRoundData();
 
         uint EthUsd = getEthUsd();
-        uint EurUsd = uint(price);
+        uint EurUsd = price.toUint256();
 
-        return EthUsd * 10 ** 8 / EurUsd;
+        return EthUsd.mul(10 ** 8).div(EurUsd);
     }
 
     function getEthAud() public view returns (uint) {
@@ -55,9 +63,9 @@ contract SendEtherRinkeby {
         ) = aud_usd_price_feed.latestRoundData();
 
         uint EthUsd = getEthUsd();
-        uint AudUsd = uint(price);
+        uint AudUsd = price.toUint256();
 
-        return EthUsd * 10 ** 8 / AudUsd;
+        return EthUsd.mul(10 ** 8).div(AudUsd);
     }
 
     function getEthGbp() public view returns (uint) {
@@ -66,16 +74,16 @@ contract SendEtherRinkeby {
         ) = gbp_usd_price_feed.latestRoundData();
 
         uint EthUsd = getEthUsd();
-        uint GbpUsd = uint(price);
+        uint GbpUsd = price.toUint256();
 
-        return EthUsd * 10 ** 8 / GbpUsd;
+        return EthUsd.mul(10 ** 8).div(GbpUsd);
     }
 
     function convertEthUsd(uint _amountInUsd) public view returns (uint) {
 
         uint EthUsd = getEthUsd();
 
-        return _amountInUsd * 10 ** 16 / EthUsd;
+        return _amountInUsd.mul(10 ** 16).div(EthUsd);
 
     }
     
@@ -83,7 +91,7 @@ contract SendEtherRinkeby {
 
         uint EthJpy = uint(getEthJpy());
 
-        return _amountInJpy * 10 ** 16 / EthJpy;
+        return _amountInJpy.mul(10 ** 16).div(EthJpy);
 
     }
 
@@ -91,7 +99,7 @@ contract SendEtherRinkeby {
 
         uint EthAud = uint(getEthAud());
 
-        return _amountInAud * 10 ** 16 / EthAud;
+        return _amountInAud.mul(10 ** 16).div(EthAud);
 
     }   
 
@@ -99,7 +107,7 @@ contract SendEtherRinkeby {
 
         uint EthEur = uint(getEthEur());
 
-        return _amountInEur * 10 ** 16 / EthEur;
+        return _amountInEur.mul(10 ** 16).div(EthEur);
 
     }   
 
@@ -107,7 +115,7 @@ contract SendEtherRinkeby {
 
         uint EthGbp = uint(getEthGbp());
 
-        return _amountInGbp * 10 ** 16 / EthGbp;
+        return _amountInGbp.mul(10 ** 16).div(EthGbp);
 
     }   
 
