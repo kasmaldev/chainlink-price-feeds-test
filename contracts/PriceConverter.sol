@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.4;
 
-import "@chainlink/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
+import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract PriceConverter is Ownable {
@@ -57,20 +57,13 @@ contract PriceConverter is Ownable {
     }
 
 
-    /**
-    * @dev transferring _amount Ether to 
-    * the _recipient address from the contract.
-    * 
-    * requires: enough balance
-    * 
-    * @return true if transfer was successful
-    */
+
     function transferEther(
         address payable _recipient, 
         uint _amount
     ) 
         public 
-        returns (bool) 
+        returns (bool status) 
     {
         uint balance = getBalance(); 
 
@@ -81,20 +74,11 @@ contract PriceConverter is Ownable {
     }
 
 
-    /**
-    * @dev transferring _amount JPY to 
-    * the _recipient address from the contract.
-    * 
-    * requires: enough balance
-    * 
-    * @return true if transfer was successful
-    */
     function transferJpyEth(
         address payable _recipient,
         uint _amountInJpy
     )
         public
-        returns (bool)
     {
         uint balance = getBalance();
         uint _amountInEth = getEthJpy(_amountInJpy) * 10 ** 10;
